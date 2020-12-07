@@ -173,6 +173,7 @@ class GoogleDocstring(UnicodeMixin):
                 'warns': self._parse_warns_section,
                 'yield': self._parse_yields_section,
                 'yields': self._parse_yields_section,
+                'side effects': self._parse_side_effect_section
             }  # type: Dict[unicode, Callable]
 
         self._load_custom_sections()
@@ -761,6 +762,11 @@ class GoogleDocstring(UnicodeMixin):
         # type: (unicode) -> List[unicode]
         fields = self._consume_returns_section()
         return self._format_fields(_('Yields'), fields)
+
+    def _parse_side_effect_section(self, section):
+        # type: (unicode) -> List[unicode]
+        fields = self._consume_returns_section()
+        return self._format_fields(section, fields)
 
     def _partition_field_on_colon(self, line):
         # type: (unicode) -> Tuple[unicode, unicode, unicode]
